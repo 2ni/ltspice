@@ -1,0 +1,15 @@
+*****************************************************
+* solar cell model based on
+* https://electronics.stackexchange.com/questions/257253/modeling-a-solar-panel-for-simulations
+* http://intusoft.com/nlhtm/nl78.htm#The_Solar_Cell_SPICE_Model
+* define Imax and Vmax
+*****************************************************
+.subckt solarcell A C
+R1 A C {Rshunt}
+R2 1 A {Rseries}
+D1 1 C Dpv
+I1 C 1 {Imax}
+.param Rseries=.5 Rshunt=1meg Is=1e-11 Imax=.33 Vmax=21
+.param N=Vmax*38.6/log(Imax/Is)
+.model Dpv D(N={N} XTI={3*N} IS={Is} EG={1.11*N}
+.end
